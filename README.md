@@ -1,48 +1,72 @@
-![Banner image](https://user-images.githubusercontent.com/10284570/173569848-c624317f-42b1-45a6-ab09-f0ea3c247648.png)
+## JAAS AI 
 
-# n8n-nodes-starter
+JaaS AI is a turnkey evaluationAI service that scores, analyzes, validates and monitors any AI-generated text in seconds. Plug JaaS AI into your workflow to ensure accuracy, consistency, and quality—without needing extra reviewers. The system evaluates responses based on customizable criteria and provides detailed scoring and reasoning.
+JaaS AI has been proven to detect Hallucination in AI Agents and chat bots.
 
-This repo contains example nodes to help you get started building your own custom integrations for [n8n](https://n8n.io). It includes the node linter and other dependencies.
+*Put your workflows and chat bots under the microscope and understand when they start to derail, hallucinate or degrade their accuracy.*
 
-To make your custom node available to the community, you must create it as an npm package, and [submit it to the npm registry](https://docs.npmjs.com/packages-and-modules/contributing-packages-to-the-registry).
+### Requirements
 
-If you would like your node to be available on n8n cloud you can also [submit your node for verification](https://docs.n8n.io/integrations/creating-nodes/deploy/submit-community-nodes/).
+To configure you n8n node, you need a JaaS API key. For that you have to register for the service at jaas-ai.net.You will also need a LLM Provider API key.
 
-## Prerequisites
 
-You need the following installed on your development machine:
+### Understanding the evaluation process
 
-* [git](https://git-scm.com/downloads)
-* Node.js and npm. Minimum version Node 20. You can find instructions on how to install both using nvm (Node Version Manager) for Linux, Mac, and WSL [here](https://github.com/nvm-sh/nvm). For Windows users, refer to Microsoft's guide to [Install NodeJS on Windows](https://docs.microsoft.com/en-us/windows/dev-environment/javascript/nodejs-on-windows).
-* Install n8n with:
-  ```
-  npm install n8n -g
-  ```
-* Recommended: follow n8n's guide to [set up your development environment](https://docs.n8n.io/integrations/creating-nodes/build/node-development-environment/).
+The evaluation process is very simple. It compares an *answer* to a specific *question* to a *ground truth answer* in a *context* given. A *score* and *reasoning* is provided based on a *criteria* or criterion given to evaluate.
 
-## Using this starter
+#### Inputs to the evaluation
+- . **question:** The question that you want to evaluate. Example: *Which is capital of France?*
 
-These are the basic steps for working with the starter. For detailed guidance on creating and publishing nodes, refer to the [documentation](https://docs.n8n.io/integrations/creating-nodes/).
+- . **answer:** This is the answer that is going to be evaluated. Example: *Paris*.
 
-1. [Generate a new repository](https://github.com/n8n-io/n8n-nodes-starter/generate) from this template repository.
-2. Clone your new repo:
-   ```
-   git clone https://github.com/<your organization>/<your-repo-name>.git
-   ```
-3. Run `npm i` to install dependencies.
-4. Open the project in your editor.
-5. Browse the examples in `/nodes` and `/credentials`. Modify the examples, or replace them with your own nodes.
-6. Update the `package.json` to match your details.
-7. Run `npm run lint` to check for errors or `npm run lintfix` to automatically fix errors when possible.
-8. Test your node locally. Refer to [Run your node locally](https://docs.n8n.io/integrations/creating-nodes/test/run-node-locally/) for guidance.
-9. Replace this README with documentation for your node. Use the [README_TEMPLATE](README_TEMPLATE.md) to get started.
-10. Update the LICENSE file to use your details.
-11. [Publish](https://docs.npmjs.com/packages-and-modules/contributing-packages-to-the-registry) your package to npm.
+- . **ground_truth_answer**: This is the source of truth. It is used as rubric to for the evaluation process to score the criterion. Example: *The capital of France is Paris.*
 
-## More information
+- . **context:** Additional information that is used to evaluate. The context becomes more relevant in non-direct comparison criterion. As an example in cases of **hallucination:** The context is key to understand if the evaluated answer related to the conversation that has been happening. Example: *Paris is the capital and largest city of France, with an estimated population of 2,048,472 in January 2025 in an area of more than 105 km2 (41 sq mi).*
 
-Refer to our [documentation on creating nodes](https://docs.n8n.io/integrations/creating-nodes/) for detailed information on building your own nodes.
+- . **criteria:** The criteria or criterion is the base of the scoring process. The evaluation tool scores the *answer* based on the criteria given. Example: *Accuracy, Hallucination.*
 
-## License
+- . **type:** This is the type of evaluation. There are 4 types: *Simple (S), Conversational Simple (D),
+  -  The main differences are: *conversational or non-conversations*: the *conversational* types detect chit-chat conversations that are not evaluated. This is key when evaluating or monitoring *chat bots* or transcripts of *voice conversations*.  
 
-[MIT](https://github.com/n8n-io/n8n-nodes-starter/blob/master/LICENSE.md)
+- . **cohort:** The *cohort* helps in the monitoring and analysis process. It does not intervene in the evaluation itself, while indicates a grouping of evaluation. As an example, if the tool is evaluating conversations from a chat bot, each conversation can have its own cohort for better tracking and monitoring.
+
+
+#### Example of a Information for an evaluation
+```json
+
+From Input to the Node:	
+  "question": "What is the capital of France?",
+  "answer": "Paris.",
+  "ground_truth_answer": "Paris is the capital of France.",
+  "context": "",
+
+From Configuration:
+	"evaluation_criteria": ["Accuracy", "Hallucination"],
+  "type": "S",
+  "cohort":"ChatBot1"
+
+```
+After the evaluation is completed almost in real time, the system returns the score for each of the metrics and the reasoning behind.
+
+
+### Using the n8n JaaS Module
+
+***Configuration:*** The module requires the corresponding configuration:
+	- JaaS API Key: linked to you account in jaas-ai.com
+	- Criteria: you can enter up to 3 criteria for each node. The criteria should be available in teh Criteria Database in jaas-ai.com.
+	- Type of Evaluation: S - Simple, or C- Conversational
+	- Cohort: to groupe the evaluations in groups for better tracking
+  
+***Input:*** You should provide the no de the fields needed for the evaluation:
+	- question: question to answer
+	- answer: answer that has to be evaluated
+	- ground_truth_answer: source of truth for the answer to be evaluated
+	- context: additional information to help the evaluation process
+The inputs should be in Json Format.
+
+Obtain the results and monitor what is going on with your tools!
+
+Look for more information and examples in our website!!
+
+support: support@jaas-ai.com
+website: jaas-ai.net
