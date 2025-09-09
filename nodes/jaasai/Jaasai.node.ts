@@ -126,29 +126,33 @@ export class Jaasai implements INodeType {
 					throw new NodeOperationError(this.getNode(), 'No API key provided!');
 				}
 				//console.log('API Key:', apiKey);
-				// Fetch the data from the JaaS API
-        const jaasData = await this.helpers.request({
-          method: 'POST',
-          //url: `http://api.jaas-ai.com/v1/evaluate`,
-					url: 'https://api.jaas-ai.com/v1/evaluate',
+				// Fetch the data from the JaaS AP
+				const jaasData = await this.helpers.httpRequestWithAuthentication.call(
+					this,
+					'jaasaiApi', // credential name
+					{
+          	method: 'POST',
+          	//url: `http://api.jaas-ai.com/v1/evaluate`,
+						url: 'https://api.jaas-ai.com/v1/evaluate',
 
-					headers: {
-						'accept': 'application/json',
-						'Authorization': 'Bearer ' + apiKey,
-					},
-					body: {
-						'question': question,
-						'ground_truth_answer': ground_truth_answer,
-						'answer': answer,
-						'context': context,
-						//other parameters,
-						'evaluation_criteria': evaluation_criteria, // or use the condition variable
-						'type': type, // 'S' for single, 'D' for conversational, 'V' for verified
-						'cohort': cohort, // Cohort name, e.g., 'N8N-NC'-> Default
+						headers: {
+							'accept': 'application/json',
+							'Authorization': 'Bearer ' + apiKey,
+						},
+						body: {
+							'question': question,
+							'ground_truth_answer': ground_truth_answer,
+							'answer': answer,
+							'context': context,
+							//other parameters,
+							'evaluation_criteria': evaluation_criteria, // or use the condition variable
+							'type': type, // 'S' for single, 'D' for conversational, 'V' for verified
+							'cohort': cohort, // Cohort name, e.g., 'N8N-NC'-> Default
 
-          },
-          json: true,
-        });
+          	},
+          	json: true,
+      	  }
+				);
 
 
         returnData.push({
@@ -164,6 +168,9 @@ export class Jaasai implements INodeType {
             json: {
               error: error.message,
             },
+						pairedItem: {
+    						item: i,
+						},
           });
           continue;
         }

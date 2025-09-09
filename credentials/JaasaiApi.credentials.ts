@@ -1,6 +1,9 @@
 import {
   ICredentialType,
   INodeProperties,
+	//ICredentialsDecrypted,
+	//INodeCredentialTestResult,
+	ICredentialTestRequest,
 } from 'n8n-workflow';
 
 export class JaasaiApi implements ICredentialType {
@@ -20,4 +23,15 @@ export class JaasaiApi implements ICredentialType {
       description: 'Your JaaS AI API key',
     },
   ];
+
+  test: ICredentialTestRequest = {
+    request: {
+      url: 'https://api.jaas-ai.com/health', // or a test endpoint
+      method: 'GET', // or 'POST' if needed
+      //headers: {
+      //  'Authorization': '=Bearer {{$credentials.apiKey}}',
+      //},
+    },
+
+  };
 }

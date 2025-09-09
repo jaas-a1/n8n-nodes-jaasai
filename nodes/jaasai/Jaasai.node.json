@@ -17,14 +17,27 @@
     }
   ],
   "properties": [
-    {
-      "Criteria": "Criteria",
-      "name": "criteria",
-      "type": "string",
-      "default": "",
-      "required": true,
-      "description": "Select Criteria for evaluation"
-    }
+  	{
+    	"displayName": "Resource",
+    	"name": "resource",
+    	"type": "options",
+    	"options": [
+      	{
+        	"name": "Evaluate",
+        	"value": "evaluate",
+					"description": "Evaluate AI Agents and Outputs"
+      	}
+    	],
+			"default": "evaluate"
+		},
+  	{
+    	"displayName": "Criteria",
+    	"name": "criteria",
+    	"type": "string",
+    	"default": "",
+    	"required": true,
+    	"description": "Select Criteria for evaluation"
+  	}
 
   ]
 }

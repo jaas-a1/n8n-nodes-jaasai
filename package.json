@@ -37,10 +37,10 @@
   "n8n": {
     "n8nNodesApiVersion": 1,
     "credentials": [
-      "dist/credentials/Jaasai.credentials.js"
+      "dist/credentials/JaasaiApi.credentials.js"
     ],
     "nodes": [
-      "dist/nodes/jaasai/Jassai.node.js"
+      "dist/nodes/jaasai/Jaasai.node.js"
     ]
   },
   "devDependencies": {
