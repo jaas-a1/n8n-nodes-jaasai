@@ -3,7 +3,7 @@ import {
   INodeProperties,
 } from 'n8n-workflow';
 
-export class Jaasai implements ICredentialType {
+export class JaasaiApi implements ICredentialType {
   name = 'jaasaiApi';
   displayName = 'JaaS AI API';
   documentationUrl = 'https://jaas-ai.net';

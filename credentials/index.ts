@@ -1,5 +1,5 @@
-import { Jaasai } from './Jaasai.credentials';
+import { JaasaiApi } from './JaasaiApi.credentials';
 
 export {
-  Jaasai,
+  JaasaiApi,
 };
