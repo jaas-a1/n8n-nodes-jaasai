@@ -88,7 +88,38 @@ export class Jaasai implements INodeType {
 				default: 'S',
 				//required: false,
 			},
+			// Added this for testing.
+			{
 
+				displayName: 'Evaluation Fields: Question',
+				name: 'question',
+				type: 'string',
+				default: '',
+			},
+			{
+				displayName: 'Answer',
+				name: 'answer',
+				type: 'string',
+				default: '',
+			},
+			{
+				displayName: 'Ground Truth Answer',
+				name: 'ground_truth_answer',
+				type: 'string',
+				default: '',
+			},
+			{
+				displayName: 'Context',
+				name: 'context',
+				type: 'string',
+				default: '',
+			},
+			{
+				displayName: 'Cohort',
+				name: 'cohort',
+				type: 'string',
+				default: 'N8N-NC',
+			},
     ],
   };
 
@@ -99,11 +130,11 @@ export class Jaasai implements INodeType {
     for (let i = 0; i < items.length; i++) {
       try {
         //const city = this.getNodeParameter('city', i) as string;
-        const question = items[i].json.question as string||"";
-				const answer  = items[i].json.answer as string||"";
-				const context = items[i].json.context as string||"";
-				const ground_truth_answer = items[i].json.ground_truth_answer as string||"";
-				const cohort = items[i].json.cohort as string||"N8N-NC";
+        const question = this.getNodeParameter('question',i)||"";//items[i].json.question as string||"";
+				const answer  = this.getNodeParameter('answer',i)|| "";//items[i].json.answer as string||"";
+				const context = this.getNodeParameter('context',i)||"";//items[i].json.context as string||"";
+				const ground_truth_answer = this.getNodeParameter('ground_truth_answer',i)||"";//items[i].json.ground_truth_answer as string||"";
+				const cohort = this.getNodeParameter('cohort',i)||"N8N-NC";//items[i].json.cohort as string||"N8N-NC";
 
 				const evaluation_criteria1 = this.getNodeParameter('criteria1', i) as string ||"Accuracy";
 				const evaluation_criteria2 = this.getNodeParameter('criteria2', i) as string ||"";
