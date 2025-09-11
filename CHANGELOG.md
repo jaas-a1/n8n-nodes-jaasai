@@ -1,6 +1,6 @@
 # Changelog
 
-## [0.2.0] - 2025-09-10
+## [0.2.1] - 2025-09-10
 ### Changed
 - Added direct mapping into the node instead of requiring a JSON file, simplifying data management.
 
